@@ -1,4 +1,7 @@
 # ORCA BERG
+<p align-items=center>
+   <img src=https://github.com/NEURAL-Y/ice-orca/blob/main/public/logo.png width=800>
+</p>
 
 ![Rust](https://img.shields.io/badge/Rust-1.XX%2B-orange?logo=rust)
 ![Status](https://img.shields.io/badge/status-under%20development-yellow)
