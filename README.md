@@ -1,6 +1,6 @@
 # ORCA BERG
 <p align-items=center>
-   <img src=https://github.com/NEURAL-Y/ice-orca/blob/main/public/logo.png width=800>
+   <img src=https://github.com/NEURAL-Y/ice-orca/blob/main/public/logo.png width=800 height=500>
 </p>
 
 ![Rust](https://img.shields.io/badge/Rust-1.XX%2B-orange?logo=rust)
