@@ -1,4 +1,4 @@
-# ORCA BERG
+# ICE ORCA
 <p align-items=center>
    <img src=https://github.com/NEURAL-Y/ice-orca/blob/main/public/logo.png width=800 height=500>
 </p>
