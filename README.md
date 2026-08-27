@@ -1,39 +1,35 @@
+<div align="center">
+
+<img src="https://raw.githubusercontent.com/NEURAL-Y/ice-orca/main/public/logo.png" alt="ICE ORCA" width="640"/>
+
 # ICE ORCA
-<p align-items=center>
-   <img src=https://github.com/NEURAL-Y/ice-orca/blob/main/public/logo.png width=800 height=500>
-</p>
+
+**A Rust-native data analytics and visualization library for interactive exploratory data analysis.**
 
 ![Rust](https://img.shields.io/badge/Rust-1.XX%2B-orange?logo=rust)
 ![Status](https://img.shields.io/badge/status-under%20development-yellow)
 [![License](https://img.shields.io/badge/license-BSD--3--Clause-blue)](https://github.com/NEURAL-Y/ice-orca/blob/main/LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
 > **Explore data, don't just plot it.**
 
-ORCA BERG is a Rust-native data analytics and visualization library designed for **interactive exploratory data analysis**.
+[Vision](#vision) • [Example](#example-concept) • [Planned Features](#planned-features) • [Architecture](#planned-architecture) • [Status](#development-status) • [Contributing](#contributing)
 
-It aims to combine DataFrame-based analytics, automatic visualization, compact statistical summaries, and a modern investigation-focused GUI.
+</div>
 
-Instead of forcing users to manually create dozens of plots, ORCA BERG provides a compact overview of a dataset and lets users **dive deeper into individual features by interacting directly with the visualizations**.
+---
 
-## ✨ Vision
+ICE ORCA combines DataFrame-based analytics, automatic visualization, compact statistical summaries, and a modern investigation-focused GUI. Instead of manually creating dozens of plots, it gives you a compact overview of a dataset and lets you **dive into individual features by interacting directly with the visualizations**.
 
-Traditional data analysis often looks like this:
+## Vision
+
+Traditional EDA tends to look like this:
 
 ```text
-load data
-   ↓
-describe()
-   ↓
-create plot
-   ↓
-create another plot
-   ↓
-inspect another column
-   ↓
-create another plot
+load data → describe() → create plot → create another plot → inspect column → create another plot → ...
 ```
 
-ORCA BERG aims to make this:
+ICE ORCA aims to make it this:
 
 ```text
               Dataset
@@ -53,13 +49,11 @@ ORCA BERG aims to make this:
           Detailed Analysis
 ```
 
-The goal is simple:
-
 > **Help users discover what is interesting in their data, rather than merely drawing whatever chart they manually requested.**
 
-## 🔬 Example Concept
+## Example Concept
 
-A dataset overview could look like:
+A dataset overview, with distributions embedded directly in the summary:
 
 ```text
 ┌─────────────────────────────────────────────────────────────┐
@@ -73,28 +67,7 @@ A dataset overview could look like:
 └────────────┴───────┴────────┴────────┴──────────────────────┘
 ```
 
-The compact distribution gives an immediate visual indication of the shape of each feature without requiring a separate plot.
-
-Selecting a feature can open a detailed investigation view containing:
-
-* Distribution
-* Mean
-* Median
-* Standard deviation
-* Minimum and maximum
-* Quantiles
-* Skewness
-* Kurtosis
-* Missing values
-* Outliers
-* Correlations
-* Feature-specific diagnostics
-
-## 🖱️ Click to Investigate
-
-One of ORCA BERG's core ideas is that **visualizations should be interactive entry points into analysis**.
-
-For example:
+Clicking a feature — the **visualization itself**, not just the column name — opens a detailed view:
 
 ```text
 salary       ▁▁▂▃▅▇█▆▃▂
@@ -103,12 +76,10 @@ salary       ▁▁▂▃▅▇█▆▃▂
                 ↓
        ┌──────────────────────┐
        │ salary               │
-       │                      │
        │      ╭────╮          │
        │   ╭──╯    ╰──╮       │
        │ ╭─╯          ╰────   │
        │─╯                    │
-       │                      │
        │ Mean       54,203    │
        │ Median     49,100    │
        │ Std        18,203    │
@@ -118,84 +89,22 @@ salary       ▁▁▂▃▅▇█▆▃▂
        └──────────────────────┘
 ```
 
-Users should be able to click the **actual visualization**, not just the column name.
+The interaction model driving the whole GUI: **see → notice → click → investigate.**
 
-The interaction model is:
+## Planned Features
 
-```text
-See
- ↓
-Notice
- ↓
-Click
- ↓
-Visualize
- ↓
-Investigate
-```
+**Data Analytics** — descriptive statistics, quantiles/percentiles, skewness & kurtosis, missing-value and duplicate detection, outlier detection, cardinality and correlation analysis, grouped statistics.
 
-A user can move from a tiny distribution in an overview directly into a full visualization and inspect the information behind it.
-
-Future interactions may include:
+**Automatic Visualization** — ICE ORCA picks a useful representation based on data type, aiming for the most useful visual information with the least manual work:
 
 ```text
-Click distribution
-        ↓
-   Full plot
-        │
-   ┌────┼──────────────┐
-   ↓    ↓              ↓
-Stats Outliers      Distribution
-   │
-   └──────→ Correlations
+Numeric     → distribution, box plot, outliers, statistics
+Categorical → frequency, category distribution
+Datetime    → temporal distribution, trends
+Boolean     → proportions
 ```
 
-## 🚀 Planned Features
-
-### Data Analytics
-
-* DataFrame-based analysis
-* Descriptive statistics
-* Quantiles and percentiles
-* Skewness
-* Kurtosis
-* Missing-value analysis
-* Duplicate detection
-* Outlier detection
-* Cardinality analysis
-* Correlation analysis
-* Grouped statistics
-
-### Automatic Visualization
-
-ORCA BERG will automatically select useful visual representations based on the data type.
-
-```text
-Numeric
-    → distribution
-    → box plot
-    → outliers
-    → statistics
-
-Categorical
-    → frequency
-    → category distribution
-
-Datetime
-    → temporal distribution
-    → trends
-
-Boolean
-    → proportions
-```
-
-The objective is not to automatically generate as many charts as possible.
-
-It is to generate the **most useful visual information with the least manual work**.
-
-### 📊 Micro-Visualizations
-
-Compact visualizations will be embedded directly into statistical summaries.
+**Micro-Visualizations** — compact sparkline-style distributions embedded directly into summaries:
 
 ```text
 age          ▁▂▅▇█▇▅▃▂▁
@@ -203,59 +112,25 @@ salary       ▁▁▂▃▅▇█▆▃▂
 experience   ▁▂▄▆█▇▅▃▂
 ```
 
-These provide a quick visual representation of distributions directly inside the dataset overview.
-
-### 🔎 Interactive Investigation
-
-The GUI will be designed around:
-
-> **See → notice → click → investigate.**
-
-A suspicious distribution, high missingness, unusual skewness, strong correlation, or potential outlier should become directly explorable.
-
-### 🧪 Data Quality
-
-ORCA BERG is intended to identify potentially important issues such as:
+**Data Quality** — surfaces issues as clickable, investigable warnings rather than static text:
 
 ```text
-⚠ High missingness
-⚠ Strong skew
-⚠ Heavy-tailed distribution
-⚠ Extreme outliers
-⚠ Near-constant feature
-⚠ Highly correlated features
+⚠ High missingness        ⚠ Extreme outliers
+⚠ Strong skew              ⚠ Near-constant feature
+⚠ Heavy-tailed distribution   ⚠ Highly correlated features
 ⚠ Potential duplicate rows
 ```
 
-Rather than simply displaying a warning, the GUI should eventually allow users to **click the warning and inspect the underlying data**.
+**ML-Oriented Exploration** *(future)* — target-aware feature analysis, class imbalance, feature-target relationships, train/test distribution comparison, data drift, potential leakage indicators, feature redundancy and importance exploration.
 
-### 🤖 ML-Oriented Exploration
+## Rust First
 
-Future versions may provide analysis specifically useful for machine-learning workflows:
+ICE ORCA is built specifically for the Rust ecosystem — not a port of an existing Python library API-for-API. The goal is a modern EDA experience for data scientists and ML engineers, backed by Rust's performance, safety, and portability, exploring what analysis looks like when **analytics and visualization are designed together from the start**.
 
-* Target-aware feature analysis
-* Class imbalance
-* Feature-target relationships
-* Train/test distribution comparison
-* Data drift
-* Potential data leakage indicators
-* Feature redundancy
-* Feature importance exploration
-
-## 🦀 Rust First
-
-ORCA BERG is designed specifically for the Rust ecosystem.
-
-The long-term goal is to provide a modern experience for data scientists and ML engineers while retaining the performance, safety, and portability of Rust.
-
-The project is not intended to simply reproduce existing Python libraries API-for-API.
-
-Instead, it aims to explore what **data analysis could look like when analytics and visualization are designed together from the beginning**.
-
-## 🧭 Planned Architecture
+## Planned Architecture
 
 ```text
-                         ORCA BERG
+                         ICE ORCA
                              │
              ┌───────────────┼───────────────┐
              │               │               │
@@ -271,52 +146,46 @@ Instead, it aims to explore what **data analysis could look like when analytics 
                          DataFrame
 ```
 
-The project will initially build on existing Rust data infrastructure where appropriate rather than unnecessarily reinventing mature components.
+Where sensible, ICE ORCA builds on existing mature Rust data infrastructure rather than reinventing it.
 
-## 🛠️ Development Status
+## Development Status
 
-**Under Development**
-
-ORCA BERG is a long-term project under active development.
-
-The initial development focus is:
+**Under active, long-term development.** Build order:
 
 ```text
-1. Data representation
-2. Statistical engine
-3. Distribution analysis
-4. Terminal micro-visualizations
+1. Data representation           6. Interactive GUI
+2. Statistical engine            7. Click-to-investigate workflow
+3. Distribution analysis         8. Advanced EDA
+4. Terminal micro-visualizations 9. ML-oriented analysis
 5. Visualization engine
-6. Interactive GUI
-7. Click-to-investigate workflow
-8. Advanced EDA
-9. ML-oriented analysis
 ```
 
-The project is intentionally being developed incrementally.
+Being developed incrementally — expect the API surface to shift as the analytics and visualization layers take shape.
 
-## 🎯 Long-Term Goal
-
-ORCA BERG aims to become a unified environment for:
+## Long-Term Goal
 
 ```text
-Data
- │
- ├── Analyze
- │
- ├── Visualize
- │
- ├── Investigate
- │
- └── Understand
+Data → Analyze → Visualize → Investigate → Understand
 ```
 
-The ultimate goal is not to provide the largest number of charts.
+Not the largest number of charts — **finding useful information inside a dataset, faster, more visually, more interactively.**
 
-It is to make **finding useful information inside a dataset faster, more visual, and more interactive**.
+## Contributing
 
-## 📜 License
+1. Fork the repo and branch from `main`.
+2. Make focused commits; add tests where relevant.
+3. Open a PR describing the change and motivation.
 
-ORCA BERG is licensed under the **BSD 3-Clause License**.
+Since the analytics/visualization architecture is still settling, open an issue before tackling a large roadmap item to align on approach first.
 
-See the `LICENSE` file for the full license text.
+## License
+
+ICE ORCA is licensed under the [APACHE 2.0 License](https://github.com/NEURAL-Y/ice-orca/blob/main/LICENSE).
+
+---
+
+<div align="center">
+
+**Explore data, don't just plot it.**
+
+</div>
