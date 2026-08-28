@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://raw.githubusercontent.com/NEURAL-Y/ice-orca/main/public/logo.png" alt="ICE ORCA" width="640"/>
+<img src="https://raw.githubusercontent.com/NEURAL-Y/ice-orca/main/public/logo.png" alt="ICE ORCA" width="220"/>
 
 # ICE ORCA
 
